@@ -5,5 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface JobRoles extends JpaRepository<JobRole, Long> {
+public interface JobRolesRepository extends JpaRepository<JobRole, Long> {
+
+    JobRole findByName(String name);
 }
