@@ -51,6 +51,7 @@ public class UserRestController {
         return new ResponseEntity<>( HttpStatus.CREATED);
     }
 
+
     @PostMapping("/auth/signin")
     public ResponseEntity<?> loginUser(@RequestBody User currentUser) throws AuthenticationException {
 
