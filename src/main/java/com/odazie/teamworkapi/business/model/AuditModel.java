@@ -13,7 +13,7 @@ import java.util.Date;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(
-        value = {"createdAt", "updatedAt"},
+        value = {"createdOn", "updatedOn"},
         allowGetters = true
 )
 public abstract class AuditModel {

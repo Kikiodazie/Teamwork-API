@@ -19,16 +19,24 @@ import java.util.Map;
 @Service
 public class CloudinaryService {
 
-    @Autowired
-    private Cloudinary cloudinaryConfig;
+    private final Cloudinary cloudinaryConfig;
+    private final GifRepository gifRepository;
 
-    private GifRepository gifRepository;
+    public CloudinaryService(Cloudinary cloudinaryConfig, GifRepository gifRepository) {
+        this.cloudinaryConfig = cloudinaryConfig;
+        this.gifRepository = gifRepository;
+    }
 
-
-    public String uploadFile(MultipartFile file) {
+    public String uploadFile(MultipartFile gif) {
         try {
-            File uploadedFile = convertMultiPartToFile(file);
+            File uploadedFile = convertMultiPartToFile(gif);
             Map uploadResult = cloudinaryConfig.uploader().upload(uploadedFile, ObjectUtils.emptyMap());
+            boolean isDeleted = uploadedFile.delete();
+
+            if (isDeleted){
+                System.out.println("File successfully deleted");
+            }else
+                System.out.println("File doesn't exist");
             return  uploadResult.get("url").toString();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -43,12 +51,14 @@ public class CloudinaryService {
         return convFile;
     }
 
-    private void saveGifUrlToDB(Gif gif, String imageUrl, User currentUser){
+    public void saveGifToDB(String imageUrl, String title, User currentUser){
+        Gif gif = new Gif();
+
+        gif.setImageUrl(imageUrl);
+        gif.setTitle(title);
         gif.setUser(currentUser);
         currentUser.addGif(gif);
-
         getGifRepository().save(gif);
-
     }
 
     public GifRepository getGifRepository() {
