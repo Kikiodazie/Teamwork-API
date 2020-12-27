@@ -5,24 +5,22 @@ import com.cloudinary.utils.ObjectUtils;
 import com.odazie.teamworkapi.data.entity.Gif;
 import com.odazie.teamworkapi.data.entity.User;
 import com.odazie.teamworkapi.data.repository.GifRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Service
-public class CloudinaryService {
+public class CloudinaryGifService {
 
     private final Cloudinary cloudinaryConfig;
     private final GifRepository gifRepository;
 
-    public CloudinaryService(Cloudinary cloudinaryConfig, GifRepository gifRepository) {
+    public CloudinaryGifService(Cloudinary cloudinaryConfig, GifRepository gifRepository) {
         this.cloudinaryConfig = cloudinaryConfig;
         this.gifRepository = gifRepository;
     }
@@ -50,6 +48,31 @@ public class CloudinaryService {
         fos.close();
         return convFile;
     }
+
+    public LinkedHashMap<String, Object> modifyJsonResponse(String requestType, String imageUrl){
+        LinkedHashMap<String, Object> jsonResponse = new LinkedHashMap<>();
+        Gif gif = getGifRepository().findGifByImageUrl(imageUrl);
+        if(requestType.equals("create")){
+            jsonResponse.put("status", "success");
+            LinkedHashMap<String, String > data = new LinkedHashMap<>();
+            data.put("gifId", gif.getGifId().toString());
+            data.put("message","GIF image successfully posted");
+            data.put("createdOn", gif.getCreatedOn().toString());
+            data.put("title", gif.getTitle());
+            data.put("imageUrl", imageUrl);
+
+            jsonResponse.put("data", data);
+        }
+        //look at the else condition agian if need be. for better error handling.
+        else {
+            jsonResponse.put("status", "FAILED");
+
+        }
+
+        return jsonResponse;
+    }
+
+
 
     public void saveGifToDB(String imageUrl, String title, User currentUser){
         Gif gif = new Gif();

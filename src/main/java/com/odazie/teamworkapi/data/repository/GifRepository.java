@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface GifRepository extends JpaRepository<Gif, Long> {
 
 
+    Gif findGifByImageUrl(String imageUrl);
 }
