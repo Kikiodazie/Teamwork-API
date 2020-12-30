@@ -50,6 +50,14 @@ public class ArticleService {
             jsonResponse.put("data", data);
         }
 
+        if(requestType.equals("delete")){
+            jsonResponse.put("status", "success");
+            LinkedHashMap<String, String > data = new LinkedHashMap<>();
+            data.put("message","Article successfully deleted");
+            jsonResponse.put("data", data);
+        }
+
+
         //look at the else condition agian if need be. for better error handling.
 
 
@@ -67,6 +75,15 @@ public class ArticleService {
             article.setTitle(articleUpdateModel.getTitle());
         }
         return article;
+    }
+
+    public Article findArticleByIdAndUser(Long id, User currentUser){
+        return getArticleRepository().findArticleByArticleIdAndUser(id, currentUser);
+    }
+
+    public void deleteArticle(Article article, User currentUser){
+        currentUser.deleteArticle(article);
+        getArticleRepository().delete(article);
     }
 
 

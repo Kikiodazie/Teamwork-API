@@ -52,8 +52,21 @@ public class ArticleRestController {
         LinkedHashMap<String, Object> jsonResponseSpec = articleService.modifyJsonResponse("update", article);
 
 
-        return new ResponseEntity<>(jsonResponseSpec, HttpStatus.OK);
+        return new ResponseEntity<>(jsonResponseSpec, HttpStatus.ACCEPTED);
     }
+
+    @DeleteMapping("/articles/{articleId}")
+    public ResponseEntity<LinkedHashMap<String, Object>> deleteArticle(@PathVariable Long articleId, Authentication authentication){
+        User currentUser = userService.findUserByEmail(authentication.getName() );
+
+        Article article = articleService.findArticleByIdAndUser(articleId, currentUser);
+        articleService.deleteArticle(article, currentUser);
+        LinkedHashMap<String, Object> jsonResponseSpec = articleService.modifyJsonResponse("delete", article);
+
+        return new ResponseEntity<>(jsonResponseSpec, HttpStatus.ACCEPTED);
+    }
+
+
 
 
 }
