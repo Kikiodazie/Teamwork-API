@@ -57,7 +57,7 @@ public class ArticleRestController {
 
     @DeleteMapping("/articles/{articleId}")
     public ResponseEntity<LinkedHashMap<String, Object>> deleteArticle(@PathVariable Long articleId, Authentication authentication){
-        User currentUser = userService.findUserByEmail(authentication.getName() );
+        User currentUser = userService.findUserByEmail(authentication.getName());
 
         Article article = articleService.findArticleByIdAndUser(articleId, currentUser);
         articleService.deleteArticle(article, currentUser);
