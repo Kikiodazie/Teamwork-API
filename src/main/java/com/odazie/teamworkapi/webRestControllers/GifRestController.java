@@ -2,14 +2,14 @@ package com.odazie.teamworkapi.webRestControllers;
 
 import com.odazie.teamworkapi.business.service.CloudinaryGifService;
 import com.odazie.teamworkapi.business.service.UserService;
+import com.odazie.teamworkapi.data.entity.Article;
+import com.odazie.teamworkapi.data.entity.Gif;
 import com.odazie.teamworkapi.data.entity.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -40,6 +40,17 @@ public class GifRestController {
         // I am Think about proper error handling in the future that's why it takes status
         LinkedHashMap<String, Object> jsonResponse = cloudinaryGifService.modifyJsonResponse("create", url);
         return new ResponseEntity<>(jsonResponse,HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("gifs/{gifId}")
+    public ResponseEntity<LinkedHashMap<String, Object>> deleteGif(@PathVariable Long gifId, Authentication authentication){
+        User currentUser = userService.findUserByEmail(authentication.getName());
+        Gif gif = cloudinaryGifService.findGifByIdAndUser(gifId, currentUser);
+
+        cloudinaryGifService.deleteGif(gif, currentUser);
+        LinkedHashMap<String, Object> jsonResponse = cloudinaryGifService.modifyJsonResponse("delete", null);
+
+        return new ResponseEntity<>(jsonResponse, HttpStatus.ACCEPTED);
     }
 
 

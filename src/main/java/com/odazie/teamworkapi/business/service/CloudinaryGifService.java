@@ -63,13 +63,28 @@ public class CloudinaryGifService {
 
             jsonResponse.put("data", data);
         }
-        //look at the else condition agian if need be. for better error handling.
-        else {
-            jsonResponse.put("status", "FAILED");
 
+        if(requestType.equals("delete")){
+            jsonResponse.put("status", "success");
+            LinkedHashMap<String, String > data = new LinkedHashMap<>();
+            data.put("message","Gif post successfully deleted");
+            jsonResponse.put("data", data);
         }
 
+
+        //look at the else condition agian if need be. for better error handling.
+
+
         return jsonResponse;
+    }
+
+    public Gif findGifByIdAndUser(Long id, User currentUser){
+        return getGifRepository().findGifByGifIdAndUser(id, currentUser);
+    }
+
+    public void deleteGif(Gif gif, User currentUser){
+        currentUser.deleteGif(gif);
+        getGifRepository().delete(gif);
     }
 
 
