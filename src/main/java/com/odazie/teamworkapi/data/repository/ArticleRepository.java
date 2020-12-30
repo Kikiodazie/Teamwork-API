@@ -12,5 +12,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     Optional<Article> findByArticleIdAndUser (Long aLong, User user);
 
+    Article findArticleByArticleIdAndUser(Long id, User user);
+
 
 }
