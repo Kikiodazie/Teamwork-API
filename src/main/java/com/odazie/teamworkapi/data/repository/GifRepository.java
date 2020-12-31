@@ -12,4 +12,5 @@ public interface GifRepository extends JpaRepository<Gif, Long> {
 
     Gif findGifByImageUrl(String imageUrl);
     Gif findGifByGifIdAndUser(Long id, User user);
+    Gif findByGifId(Long id);
 }

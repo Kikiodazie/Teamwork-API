@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.odazie.teamworkapi.business.model.AuditModel;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 
 @Entity
 @Table(name = "comment")
@@ -20,6 +21,10 @@ public class Comment extends AuditModel {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private Article article;
+
+    @Email
+    @Column(name = "commentator_email")
+    private String commentatorEmail;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
@@ -55,5 +60,13 @@ public class Comment extends AuditModel {
 
     public void setGif(Gif gif) {
         this.gif = gif;
+    }
+
+    public String getCommentatorEmail() {
+        return commentatorEmail;
+    }
+
+    public void setCommentatorEmail(String commentatorEmail) {
+        this.commentatorEmail = commentatorEmail;
     }
 }

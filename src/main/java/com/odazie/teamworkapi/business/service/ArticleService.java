@@ -58,6 +58,7 @@ public class ArticleService {
         }
 
 
+
         //look at the else condition agian if need be. for better error handling.
 
 
@@ -91,6 +92,7 @@ public class ArticleService {
     public Optional<Article> findArticleById(Long id, User currentUser){
         return getArticleRepository().findByArticleIdAndUser(id, currentUser);
     }
+
 
     public ArticleRepository getArticleRepository() {
         return articleRepository;

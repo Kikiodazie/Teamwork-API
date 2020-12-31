@@ -87,6 +87,9 @@ public class CloudinaryGifService {
         getGifRepository().delete(gif);
     }
 
+    public Gif findGifById(Long id){
+        return getGifRepository().findByGifId(id);
+    }
 
 
     public void saveGifToDB(String imageUrl, String title, User currentUser){
