@@ -2,8 +2,10 @@ package com.odazie.teamworkapi.webRestControllers;
 
 import com.odazie.teamworkapi.business.model.ArticleUpdateModel;
 import com.odazie.teamworkapi.business.service.ArticleService;
+import com.odazie.teamworkapi.business.service.CommentService;
 import com.odazie.teamworkapi.business.service.UserService;
 import com.odazie.teamworkapi.data.entity.Article;
+import com.odazie.teamworkapi.data.entity.Comment;
 import com.odazie.teamworkapi.data.entity.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +21,7 @@ public class ArticleRestController {
     private final UserService userService;
     private final ArticleService articleService;
 
-    public ArticleRestController(UserService userService, ArticleService articleService) {
+    public ArticleRestController(UserService userService, ArticleService articleService, CommentService commentService) {
         this.userService = userService;
         this.articleService = articleService;
     }
@@ -65,6 +67,8 @@ public class ArticleRestController {
 
         return new ResponseEntity<>(jsonResponseSpec, HttpStatus.ACCEPTED);
     }
+
+
 
 
 
