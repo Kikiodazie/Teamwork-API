@@ -1,11 +1,16 @@
 package com.odazie.teamworkapi.webRestControllers;
 
 import com.odazie.teamworkapi.business.model.AuthToken;
+import com.odazie.teamworkapi.business.service.CloudinaryGifService;
+import com.odazie.teamworkapi.business.service.CompanyFeedService;
 import com.odazie.teamworkapi.business.service.UserService;
+import com.odazie.teamworkapi.data.entity.Article;
 import com.odazie.teamworkapi.data.entity.User;
+import com.odazie.teamworkapi.data.repository.ArticleRepository;
 import com.odazie.teamworkapi.data.repository.JobRolesRepository;
 import com.odazie.teamworkapi.securityConfig.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,15 +20,18 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 @RestController
 public class UserRestController {
 
     private final UserService userService;
-    private final JobRolesRepository jobRolesRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
@@ -32,11 +40,15 @@ public class UserRestController {
     @Autowired
     private TokenProvider jwtTokenUtil;
 
-    public UserRestController(UserService userService, JobRolesRepository jobRolesRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserRestController(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder, ArticleRepository articleRepository) {
         this.userService = userService;
-        this.jobRolesRepository = jobRolesRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
+
+
+
+
+
 
 
 
@@ -68,6 +80,8 @@ public class UserRestController {
         final String token = jwtTokenUtil.generateToken(authentication);
         return ResponseEntity.ok(new AuthToken(token));
     }
+
+
 
 
 
