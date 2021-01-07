@@ -7,7 +7,9 @@ import com.odazie.teamworkapi.data.entity.User;
 import com.odazie.teamworkapi.data.repository.CommentRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 @Service
 public class CommentService {
@@ -70,6 +72,23 @@ public class CommentService {
 
 
         return jsonResponse;
+    }
+
+
+
+    public static void addingCommentToResponseSpec(LinkedHashMap<String, Object> jsonResponse, LinkedHashMap<String, Object> data, List<Comment> comments2, Article article) {
+        ArrayList<Object> comments = new ArrayList<>();
+        for (Comment comment : comments2) {
+            LinkedHashMap<String, String > singleComment = new LinkedHashMap<>();
+
+            singleComment.put("commentId", comment.getCommentId().toString());
+            singleComment.put("authorId", comment.getCommentatorEmail());
+            singleComment.put("comment", comment.getComment());
+
+            comments.add(singleComment);
+        }
+        data.put("comments", comments);
+        jsonResponse.put("data", data);
     }
 
 }

@@ -17,6 +17,7 @@ public class ArticleService {
 
     public ArticleService(ArticleRepository articleRepository) {
         this.articleRepository = articleRepository;
+
     }
 
     public void saveArticle(Article article, User currentUser){
@@ -57,12 +58,28 @@ public class ArticleService {
             jsonResponse.put("data", data);
         }
 
+        if(requestType.equals("get")){
+
+            jsonResponse.put("status", "success");
+            LinkedHashMap<String, Object > data = new LinkedHashMap<>();
+
+            data.put("articleId", article.getArticleId().toString());
+            data.put("createdOn", article.getCreatedOn().toString());
+            data.put("title", article.getTitle());
+            data.put("url", article.getArticle());
+
+
+            CommentService.addingCommentToResponseSpec(jsonResponse, data, article.getComments(), article);
+        }
+
 
         //look at the else condition agian if need be. for better error handling.
 
 
         return jsonResponse;
     }
+
+
 
     public Article performPatchUpdateOnArticle(@RequestBody ArticleUpdateModel articleUpdateModel, Optional<Article> articleOptional) {
         Article article = articleOptional.get();

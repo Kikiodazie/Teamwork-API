@@ -6,6 +6,7 @@ import com.odazie.teamworkapi.business.service.CommentService;
 import com.odazie.teamworkapi.business.service.UserService;
 import com.odazie.teamworkapi.data.entity.Article;
 import com.odazie.teamworkapi.data.entity.Comment;
+import com.odazie.teamworkapi.data.entity.Gif;
 import com.odazie.teamworkapi.data.entity.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import java.util.LinkedHashMap;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("api/v1")
 public class ArticleRestController {
 
     private final UserService userService;
@@ -38,6 +40,8 @@ public class ArticleRestController {
         return new ResponseEntity<>(jsonResponse,HttpStatus.CREATED);
     }
 
+
+
     @PatchMapping("/articles/{articleId}")
     public ResponseEntity<LinkedHashMap<String, Object>> editArticle(@PathVariable Long articleId, @RequestBody ArticleUpdateModel articleUpdateModel, Authentication authentication){
         User currentUser = userService.findUserByEmail(authentication.getName());
@@ -57,6 +61,8 @@ public class ArticleRestController {
         return new ResponseEntity<>(jsonResponseSpec, HttpStatus.ACCEPTED);
     }
 
+
+
     @DeleteMapping("/articles/{articleId}")
     public ResponseEntity<LinkedHashMap<String, Object>> deleteArticle(@PathVariable Long articleId, Authentication authentication){
         User currentUser = userService.findUserByEmail(authentication.getName());
@@ -69,6 +75,18 @@ public class ArticleRestController {
     }
 
 
+
+    @GetMapping("articles/{articleId}")
+    public ResponseEntity<LinkedHashMap<String, Object>> getASpecificGif(@PathVariable Long articleId){
+        Article article = articleService.getArticleRepository().findByArticleId(articleId);
+
+        if(article == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        LinkedHashMap<String, Object> jsonResponseSpec = articleService.modifyJsonResponse("get", article);
+
+        return new ResponseEntity<>(jsonResponseSpec, HttpStatus.OK);
+    }
 
 
 

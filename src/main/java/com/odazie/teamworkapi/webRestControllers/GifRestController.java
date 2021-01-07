@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 @RestController
+@RequestMapping("api/v1")
 public class GifRestController {
 
 
@@ -47,10 +48,27 @@ public class GifRestController {
         User currentUser = userService.findUserByEmail(authentication.getName());
         Gif gif = cloudinaryGifService.findGifByIdAndUser(gifId, currentUser);
 
+        if(gif == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
         cloudinaryGifService.deleteGif(gif, currentUser);
         LinkedHashMap<String, Object> jsonResponse = cloudinaryGifService.modifyJsonResponse("delete", null);
 
         return new ResponseEntity<>(jsonResponse, HttpStatus.ACCEPTED);
+    }
+
+
+    @GetMapping("gifs/{gifId}")
+    public ResponseEntity<LinkedHashMap<String, Object>> getASpecificGif(@PathVariable Long gifId){
+        Gif gif = cloudinaryGifService.findGifById(gifId);
+
+        if(gif == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        LinkedHashMap<String, Object> jsonResponseSpec = cloudinaryGifService.modifyJsonResponse("get", gif.getImageUrl());
+
+        return new ResponseEntity<>(jsonResponseSpec, HttpStatus.OK);
     }
 
 
