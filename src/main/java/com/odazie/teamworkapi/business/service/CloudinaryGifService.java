@@ -2,6 +2,7 @@ package com.odazie.teamworkapi.business.service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.odazie.teamworkapi.data.entity.Comment;
 import com.odazie.teamworkapi.data.entity.Gif;
 import com.odazie.teamworkapi.data.entity.User;
 import com.odazie.teamworkapi.data.repository.GifRepository;
@@ -11,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -71,8 +73,21 @@ public class CloudinaryGifService {
             jsonResponse.put("data", data);
         }
 
+        if(requestType.equals("get")){
 
-        //look at the else condition agian if need be. for better error handling.
+            jsonResponse.put("status", "success");
+            LinkedHashMap<String, Object > data = new LinkedHashMap<>();
+
+            data.put("gifId", gif.getGifId().toString());
+            data.put("createdOn", gif.getCreatedOn().toString());
+            data.put("title", gif.getTitle());
+            data.put("url", gif.getImageUrl());
+
+
+            CommentService.addingCommentToResponseSpec(jsonResponse, data, gif.getComments(), null);
+        }
+
+        //look at the else condition again if need be. for better error handling.
 
 
         return jsonResponse;

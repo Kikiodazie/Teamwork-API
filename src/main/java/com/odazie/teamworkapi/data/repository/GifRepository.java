@@ -20,7 +20,6 @@ public interface GifRepository extends JpaRepository<Gif, Long> {
     Gif findGifByGifIdAndUser(Long id, User user);
     Gif findByGifId(Long id);
 
-    ArrayList<Gif> findAllByOrderByCreatedOnDesc();
     Gif findGifByCreatedOn(Date createdOn);
 
 
