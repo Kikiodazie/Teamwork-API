@@ -41,7 +41,7 @@ public class SwaggerConfig {
                 .title("TeamWork REST API")
                 .description("Teamwork is a side project I developed for learning purposes.The idea is to model an internal social network for employees of an organization. The goal of this API is to facilitate more interaction between colleagues " +
                         "and promote team bonding(In this time of COVID-19 this may be useful for coping with the new way of working). \n\n" +
-                        "Make sure to add the token generated from login in the Authorization header.\n\n Currently the is a Bug for the API Response Specification on this swagger doc, will fix")
+                        "Make sure to add the token generated from login in the Authorization header.\n\n Currently the is a Bug for the API Response Specification on this swagger doc, will fix \n\n RESPONSE SPEC SAMPLE : https://drive.google.com/file/d/1oDIQ9G_N8CDCUtqBHvli7I12FG-uDmrk/view?usp=sharing")
                 .termsOfServiceUrl("localhost")
                 .version("1.0")
                 .build();
