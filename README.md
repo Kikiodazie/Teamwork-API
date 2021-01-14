@@ -8,7 +8,7 @@
 
 Teamwork is a side project I developed for learning purposes.The idea is to model an internal social network for employees of an organization. The goal of this API is to facilitate more interaction between colleagues and promote team bonding(In this time of COVID-19 this may be useful for coping with the new way of working).
 
-This is backend API was built with Java/Spring-Boot & Postgres,documented with Swagger, deployed on heroku. View [Docs](djdc).
+This is backend API was built with Java/Spring-Boot & Postgres,documented with Swagger, deployed on heroku. View [Docs](https://guarded-peak-02857.herokuapp.com/swagger-ui.html#/).
 
 ### Features
 
@@ -29,7 +29,7 @@ first.
 - Employees can view a specific article.
 - Employees can view a specific gif post.
 
-See DOCS for working endpoints
+See [DOCS](https://guarded-peak-02857.herokuapp.com/swagger-ui.html#/) for working endpoints
 
 
 ### Development
