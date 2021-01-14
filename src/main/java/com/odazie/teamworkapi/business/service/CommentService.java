@@ -5,6 +5,7 @@ import com.odazie.teamworkapi.data.entity.Comment;
 import com.odazie.teamworkapi.data.entity.Gif;
 import com.odazie.teamworkapi.data.entity.User;
 import com.odazie.teamworkapi.data.repository.CommentRepository;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -42,11 +43,12 @@ public class CommentService {
 
 
     public LinkedHashMap<String, Object> modifyJsonResponse(String requestType,Article article, Gif gif, Comment comment){
-        LinkedHashMap<String, Object> jsonResponse = new LinkedHashMap<>();
+
+        LinkedHashMap<String, Object> response = new LinkedHashMap<>();
 
 
         if(requestType.equals("commentOnArticle")){
-            jsonResponse.put("status", "success");
+            response.put("status", "success");
             LinkedHashMap<String, String > data = new LinkedHashMap<>();
             data.put("message","Comment successfully created");
             data.put("createdOn", comment.getCreatedOn().toString());
@@ -54,24 +56,24 @@ public class CommentService {
             data.put("article", article.getArticle());
             data.put("comment", comment.getComment());
             data.put("employeeEmail", comment.getCommentatorEmail());
-            jsonResponse.put("data", data);
+            response.put("data", data);
         }
 
         if(requestType.equals("commentOnGif")){
-            jsonResponse.put("status", "success");
+            response.put("status", "success");
             LinkedHashMap<String, String > data = new LinkedHashMap<>();
             data.put("message","Comment successfully created");
             data.put("createdOn", comment.getCreatedOn().toString());
             data.put("gifTitle", gif.getGifId().toString());
             data.put("comment", comment.getComment());
             data.put("employeeEmail", comment.getCommentatorEmail());
-            jsonResponse.put("data", data);
+            response.put("data", data);
         }
 
         //look at the else condition agian if need be. for better error handling.
 
 
-        return jsonResponse;
+        return response;
     }
 
 
