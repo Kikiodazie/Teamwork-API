@@ -8,26 +8,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.context.TestPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@TestPropertySource("classpath:application-test.properties")
 class ArticleRepositoryShould {
 
     Article expected = new Article();
-    User testUser = new User();
+
     public ArticleRepositoryShould() {
         expected.setTitle("Test");
         expected.setArticle("Test");
 
-        //Initialize a user
-        testUser.setPassword("Test");
-        testUser.setGender("Test");
-        testUser.setEmail("test@testmail.com");
-        testUser.setFirstName("test");
 
-        testUser.addArticle(expected);
     }
 
     @Autowired
@@ -55,6 +51,14 @@ class ArticleRepositoryShould {
 
     @Test
     void returnArticleByArticleIdAndArticleAuthor(){
+        User testUser = new User();
+        //Initialize a user
+        testUser.setPassword("Test");
+        testUser.setGender("Test");
+        testUser.setEmail("test@testmail.com");
+        testUser.setFirstName("test");
+
+        testUser.addArticle(expected);
         testEntityManager.persist(expected);
         testEntityManager.persist(testUser);
 
