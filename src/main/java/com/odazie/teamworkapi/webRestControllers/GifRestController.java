@@ -5,6 +5,9 @@ import com.odazie.teamworkapi.business.service.UserService;
 import com.odazie.teamworkapi.data.entity.Article;
 import com.odazie.teamworkapi.data.entity.Gif;
 import com.odazie.teamworkapi.data.entity.User;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,6 +22,8 @@ import java.util.TreeMap;
 
 @RestController
 @RequestMapping("api/v1")
+@ApiOperation(value = "", authorizations = { @Authorization(value="Bearer ") })
+@Api(description = "Operations pertaining to GIFs")
 public class GifRestController {
 
 

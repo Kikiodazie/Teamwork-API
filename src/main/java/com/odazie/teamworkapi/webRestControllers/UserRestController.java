@@ -9,6 +9,9 @@ import com.odazie.teamworkapi.data.entity.User;
 import com.odazie.teamworkapi.data.repository.ArticleRepository;
 import com.odazie.teamworkapi.data.repository.JobRolesRepository;
 import com.odazie.teamworkapi.securityConfig.TokenProvider;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -27,6 +30,8 @@ import java.util.Date;
 
 @RestController
 @RequestMapping("api/v1")
+@ApiOperation(value = "", authorizations = { @Authorization(value="Bearer ") })
+@Api(description = "Operations pertaining to USERS")
 public class UserRestController {
 
     private final UserService userService;
